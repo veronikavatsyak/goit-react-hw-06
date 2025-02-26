@@ -2,7 +2,10 @@ import { IoMdContact } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import s from "./Contact.module.css";
-const Contact = ({ name, number, handleDelete }) => {
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsSlice";
+const Contact = ({ contact }) => {
+  const dispatch = useDispatch();
   return (
     <li className={s.item}>
       <div className={s.container}>
@@ -10,16 +13,20 @@ const Contact = ({ name, number, handleDelete }) => {
           <IconContext.Provider value={{ color: "green", size: 20 }}>
             <IoMdContact />
           </IconContext.Provider>
-          <p className={s.text}>{name}</p>
+          <p className={s.text}>{contact.name}</p>
         </div>
         <div className={s.phoneWrapper}>
           <IconContext.Provider value={{ color: "green", size: 20 }}>
             <FaPhoneAlt />
           </IconContext.Provider>
-          <p className={s.text}>{number}</p>
+          <p className={s.text}>{contact.number}</p>
         </div>
       </div>
-      <button onClick={handleDelete} className={s.btn} type="button">
+      <button
+        onClick={() => dispatch(deleteContact(contact.id))}
+        className={s.btn}
+        type="button"
+      >
         Delete
       </button>
     </li>
